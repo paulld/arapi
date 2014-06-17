@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20140617060018) do
 
   add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
+  create_table "articles_tags", id: false, force: true do |t|
+    t.integer "article_id", null: false
+    t.integer "tag_id",     null: false
+  end
+
   create_table "comments", force: true do |t|
     t.string   "body"
     t.integer  "article_id"

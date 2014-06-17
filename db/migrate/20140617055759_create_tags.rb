@@ -5,6 +5,8 @@ class CreateTags < ActiveRecord::Migration
       t.references :article, index: true
 
       t.timestamps
+
+      create_join_table :articles, :tags
     end
   end
 end
