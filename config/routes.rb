@@ -1,66 +1,54 @@
 Arapi::Application.routes.draw do
-  resources :jobs
 
-  resources :duties
+  get 'uuids'      => 'uuids#create'
+  get 'uuids/:num' => 'uuids#create'
 
-  resources :comments
+  scope :articles, defaults: { format: :json } do
+    get    ''     => 'articles#index'
+    get    ':ids' => 'articles#index'
+    put    ':id'  => 'articles#create_or_replace'
+    patch  ':id'  => 'articles#update'
+    delete ':id'  => 'articles#destroy'
+  end
 
-  resources :tags
+  scope :comments, defaults: { format: :json } do
+    get    ''     => 'comments#index'
+    get    ':ids' => 'comments#index'
+    put    ':id'  => 'comments#create_or_replace'
+    patch  ':id'  => 'comments#update'
+    delete ':id'  => 'comments#destroy'
+  end
 
-  resources :articles
+  scope :duties, defaults: { format: :json } do
+    get    ''     => 'duties#index'
+    get    ':ids' => 'duties#index'
+    put    ':id'  => 'duties#create_or_replace'
+    patch  ':id'  => 'duties#update'
+    delete ':id'  => 'duties#destroy'
+  end
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  scope :jobs, defaults: { format: :json } do
+    get    ''     => 'jobs#index'
+    get    ':ids' => 'jobs#index'
+    put    ':id'  => 'jobs#create_or_replace'
+    patch  ':id'  => 'jobs#update'
+    delete ':id'  => 'jobs#destroy'
+  end
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  scope :tags, defaults: { format: :json } do
+    get    ''     => 'tags#index'
+    get    ':ids' => 'tags#index'
+    put    ':id'  => 'tags#create_or_replace'
+    patch  ':id'  => 'tags#update'
+    delete ':id'  => 'tags#destroy'
+  end
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  scope :users, defaults: { format: :json } do
+    get    ''     => 'users#index'
+    get    ':ids' => 'users#index'
+    put    ':id'  => 'users#create_or_replace'
+    patch  ':id'  => 'users#update'
+    delete ':id'  => 'users#destroy'
+  end
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
