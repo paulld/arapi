@@ -1,30 +1,28 @@
-class JobsController < ApplicationController
+class TagsController < ApplicationController
 
   def index
-    jobs = params[:ids] ?
-      Job.where(id: params[:ids].split(",")).to_a :
-      Job.all.to_a
-
-    render json: jobs
+    @tags = params[:ids] ?
+      Tag.where(id: params[:ids].split(",")).to_a :
+      Tag.all.to_a
   end
 
   def create_or_replace
-    if job = Job.find_by( id: params[:id] )
-      replacement= Job.new(
-          job_params.merge( id: params[:id] )
+    if tag = Tag.find_by( id: params[:id] )
+      replacement= Tag.new(
+          tag_params.merge( id: params[:id] )
         )
       if replacement.valid?
-        job.destroy
+        tag.destroy
         replacement.save
         head :no_content
       else
         head :unprocessable_entity
       end
     else
-      if job = Job.create(
-          job_params.merge( id: params[:id] )
+      if tag = Tag.create(
+          tag_params.merge( id: params[:id] )
         )
-        render json: job, status: :created
+        render json: tag, status: :created
       else
         head :unprocessable_entity
       end
@@ -33,8 +31,8 @@ class JobsController < ApplicationController
   end
 
   def update
-    if job = Job.find_by( id: params[:id] )
-      if job.update_attributes( job_params )
+    if tag = Tag.find_by( id: params[:id] )
+      if tag.update_attributes( tag_params )
         head :no_content
       else
         head :unprocessable_entity
@@ -45,8 +43,8 @@ class JobsController < ApplicationController
   end
 
   def destroy
-    if job = Job.find_by( id: params[:id] )
-      if job.destroy
+    if tag = Tag.find_by( id: params[:id] )
+      if tag.destroy
         head :no_content
       else
         head :internal_server_error
@@ -58,7 +56,7 @@ class JobsController < ApplicationController
 
   protected
 
-  def job_params
-    params.require(:job).permit( :name )
+  def tag_params
+    params.require(:tag).permit( :name )
   end
 end
